@@ -1,0 +1,19 @@
+<Meta>
+
+	<script cache = "false" src = "sourceC.lua" type = "client" />
+	<script src = "sourceS.lua" />
+
+	<file src = "Files/Fonts/BebasNeueBold.otf" />
+
+	<file src = "Files/Images/Parent.png" />
+
+	<file src = "Files/Images/1.png" />
+	<file src = "Files/Images/2.png" />
+	<file src = "Files/Images/3.png" />
+	<file src = "Files/Images/4.png" />
+
+	<file src = "Files/Music.mp3" />
+
+	<export function = "AddPlayerPremiumFromWeb" http = "true" />
+
+</Meta>

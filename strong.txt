@@ -1,0 +1,885 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Gép: 127.0.0.1
+-- Létrehozás ideje: 2023. Jan 30. 19:05
+-- Kiszolgáló verziója: 10.4.27-MariaDB
+-- PHP verzió: 8.1.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Adatbázis: `strong`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `access_tokens`
+--
+
+CREATE TABLE `access_tokens` (
+  `accountId` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `accounts`
+--
+
+CREATE TABLE `accounts` (
+  `accountId` int(11) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `password` varchar(1024) NOT NULL,
+  `emailAddress` varchar(64) NOT NULL,
+  `lastLogin` int(11) NOT NULL DEFAULT 0,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `adminLevel` int(11) NOT NULL DEFAULT 0,
+  `adminNick` varchar(64) NOT NULL DEFAULT 'Admin',
+  `serial` varchar(32) NOT NULL DEFAULT '0',
+  `suspended` tinyint(1) NOT NULL DEFAULT 0,
+  `online` tinyint(1) NOT NULL DEFAULT 0,
+  `maximumCharacters` tinyint(4) NOT NULL DEFAULT 1,
+  `premiumPoints` int(11) NOT NULL DEFAULT 20000,
+  `adminJail` int(11) NOT NULL DEFAULT 0,
+  `adminJailBy` varchar(255) NOT NULL DEFAULT '',
+  `adminJailTimestamp` int(11) NOT NULL DEFAULT 0,
+  `adminJailTime` int(11) NOT NULL DEFAULT 0,
+  `adminJailReason` varchar(1000) NOT NULL,
+  `helperLevel` int(11) NOT NULL,
+  `guardLevel` int(11) NOT NULL,
+  `adminDutyTime` text NOT NULL DEFAULT '0',
+  `statFix` int(11) NOT NULL DEFAULT 0,
+  `statUnflip` int(11) NOT NULL DEFAULT 0,
+  `statVehicleHP` int(11) NOT NULL DEFAULT 0,
+  `statRTC` int(11) NOT NULL DEFAULT 0,
+  `statRTC2` int(11) NOT NULL DEFAULT 0,
+  `statGetveh` int(11) NOT NULL DEFAULT 0,
+  `statReply` int(11) NOT NULL DEFAULT 0,
+  `statOfflineBan` int(11) NOT NULL DEFAULT 0,
+  `statKick` int(11) NOT NULL DEFAULT 0,
+  `statArmor` int(11) NOT NULL DEFAULT 0,
+  `statSetHP` int(11) NOT NULL DEFAULT 0,
+  `statChangeName` int(11) NOT NULL DEFAULT 0,
+  `statAsegit` int(11) NOT NULL DEFAULT 0,
+  `statAgyogyit` int(11) NOT NULL DEFAULT 0,
+  `statAjail` int(11) NOT NULL DEFAULT 0,
+  `statOfflineAjail` int(11) NOT NULL DEFAULT 0,
+  `statUnjail` int(11) NOT NULL DEFAULT 0,
+  `statReceivedMessages` int(11) NOT NULL DEFAULT 0,
+  `statBan` text NOT NULL DEFAULT '0',
+  `2fa` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `animals`
+--
+
+CREATE TABLE `animals` (
+  `animalId` int(11) NOT NULL,
+  `ownerId` int(11) NOT NULL,
+  `type` enum('Husky','Rottweiler','Doberman','Bull Terrier','Boxer','Francia Bulldog') NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `health` float NOT NULL DEFAULT 100,
+  `hunger` float NOT NULL DEFAULT 100,
+  `love` float NOT NULL DEFAULT 100
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `atms`
+--
+
+CREATE TABLE `atms` (
+  `dbID` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `bans`
+--
+
+CREATE TABLE `bans` (
+  `banId` int(11) NOT NULL,
+  `serial` varchar(32) NOT NULL,
+  `playerName` varchar(64) NOT NULL,
+  `playerAccountId` int(11) NOT NULL,
+  `adminName` varchar(64) NOT NULL,
+  `adminAccountId` int(11) NOT NULL,
+  `banReason` varchar(1024) NOT NULL,
+  `banTimestamp` int(11) NOT NULL,
+  `expireTimestamp` int(11) NOT NULL,
+  `deactivated` enum('Yes','No') NOT NULL DEFAULT 'No',
+  `deactivatedBy` int(11) NOT NULL DEFAULT 1,
+  `deactivateReason` varchar(1024) DEFAULT NULL,
+  `deactivateTimestamp` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `billiards`
+--
+
+CREATE TABLE `billiards` (
+  `id` int(11) NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
+  `z` float NOT NULL,
+  `rz` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `blackjack`
+--
+
+CREATE TABLE `blackjack` (
+  `id` int(11) NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
+  `z` float NOT NULL,
+  `rz` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `minEntry` int(11) NOT NULL,
+  `maxEntry` int(11) NOT NULL,
+  `credit` bigint(20) NOT NULL DEFAULT 0,
+  `creditAll` bigint(20) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `casinopeds`
+--
+
+CREATE TABLE `casinopeds` (
+  `pedId` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `skinId` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL DEFAULT 'PED'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `characters`
+--
+
+CREATE TABLE `characters` (
+  `characterId` int(11) NOT NULL,
+  `accountId` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `age` int(11) NOT NULL DEFAULT 18,
+  `description` varchar(100) NOT NULL DEFAULT '',
+  `weight` int(11) NOT NULL DEFAULT 80,
+  `height` int(11) NOT NULL DEFAULT 190,
+  `gender` int(11) NOT NULL DEFAULT 1,
+  `skin` int(11) NOT NULL DEFAULT 7,
+  `posX` double NOT NULL DEFAULT 1482.8387451172,
+  `posY` double NOT NULL DEFAULT -1741.3214111328,
+  `posZ` double NOT NULL DEFAULT 13.546875,
+  `rotZ` double NOT NULL DEFAULT 0,
+  `interior` int(11) NOT NULL DEFAULT 0,
+  `dimension` int(11) NOT NULL DEFAULT 0,
+  `health` float NOT NULL DEFAULT 100,
+  `armor` float NOT NULL DEFAULT 0,
+  `hunger` float NOT NULL DEFAULT 100,
+  `thirst` float NOT NULL DEFAULT 100,
+  `money` bigint(20) NOT NULL DEFAULT 1000000,
+  `slotCoins` bigint(20) DEFAULT 0,
+  `lastOnline` timestamp NULL DEFAULT NULL,
+  `playedMinutes` int(11) NOT NULL DEFAULT 0,
+  `actionBarItems` varchar(128) NOT NULL DEFAULT '',
+  `playerRecipes` varchar(1024) NOT NULL DEFAULT '',
+  `isPlayerDeath` int(11) NOT NULL DEFAULT 0,
+  `bankMoney` bigint(20) NOT NULL DEFAULT 0,
+  `maxVehicles` int(11) NOT NULL DEFAULT 2,
+  `interiorLimit` int(11) NOT NULL DEFAULT 5,
+  `currentInterior` int(11) NOT NULL DEFAULT 0,
+  `groups` longtext NOT NULL,
+  `inDuty` int(11) NOT NULL DEFAULT 0,
+  `playTimeForPayday` int(11) NOT NULL DEFAULT 60,
+  `job` int(11) NOT NULL DEFAULT 0,
+  `jail` int(11) NOT NULL DEFAULT 0,
+  `jailTimestamp` int(11) NOT NULL DEFAULT 0,
+  `jailTime` int(11) NOT NULL DEFAULT 0,
+  `jailReason` varchar(1000) NOT NULL DEFAULT '',
+  `currentCustomInterior` int(11) NOT NULL DEFAULT 0,
+  `radio` int(11) NOT NULL DEFAULT 0,
+  `radio2` int(11) NOT NULL DEFAULT 0,
+  `weaponSkills` varchar(54) NOT NULL DEFAULT '0,0,0,0,0,0,0,0,0,0,0',
+  `currentClothes` longtext NOT NULL,
+  `boughtClothes` longtext NOT NULL,
+  `clothesLimit` int(11) NOT NULL DEFAULT 2,
+  `paintOnPlayerTime` int(11) NOT NULL DEFAULT 0,
+  `summerTokens` int(11) NOT NULL DEFAULT 0,
+  `stock` varchar(1500) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `copiers`
+--
+
+CREATE TABLE `copiers` (
+  `copierId` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `dailyspin`
+--
+
+CREATE TABLE `dailyspin` (
+  `dbId` int(11) NOT NULL,
+  `accountId` int(11) NOT NULL,
+  `timestamp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `farm`
+--
+
+CREATE TABLE `farm` (
+  `id` int(11) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `z` int(11) NOT NULL,
+  `rotation` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `fortunewheels`
+--
+
+CREATE TABLE `fortunewheels` (
+  `id` int(11) NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
+  `z` float NOT NULL,
+  `rz` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `groupmembers`
+--
+
+CREATE TABLE `groupmembers` (
+  `dbID` int(11) NOT NULL,
+  `groupId` int(11) NOT NULL,
+  `characterId` int(11) NOT NULL,
+  `rank` int(11) DEFAULT 1,
+  `isLeader` varchar(1) DEFAULT 'N',
+  `dutySkin` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `groups`
+--
+
+CREATE TABLE `groups` (
+  `groupId` int(11) NOT NULL,
+  `balance` bigint(20) NOT NULL DEFAULT 0,
+  `description` varchar(1024) NOT NULL,
+  `ranks` text NOT NULL,
+  `ranks_pay` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `interiors`
+--
+
+CREATE TABLE `interiors` (
+  `interiorId` int(11) NOT NULL,
+  `flag` enum('static','dynamic') NOT NULL DEFAULT 'dynamic',
+  `deleted` enum('Y','N') NOT NULL DEFAULT 'N',
+  `ownerId` int(11) DEFAULT NULL,
+  `gameInterior` int(11) DEFAULT NULL,
+  `type` enum('house','business_passive','business_active','building','garage','building2','rentable') DEFAULT NULL,
+  `dummy` enum('Y','N') NOT NULL DEFAULT 'N',
+  `name` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `entrance_position` varchar(256) DEFAULT NULL,
+  `entrance_rotation` varchar(256) DEFAULT NULL,
+  `entrance_interior` int(11) DEFAULT NULL,
+  `entrance_dimension` int(11) DEFAULT NULL,
+  `exit_position` varchar(256) DEFAULT NULL,
+  `exit_rotation` varchar(256) DEFAULT NULL,
+  `exit_interior` int(11) DEFAULT NULL,
+  `exit_dimension` int(11) DEFAULT NULL,
+  `locked` enum('Y','N') NOT NULL DEFAULT 'N',
+  `renewalTime` int(11) DEFAULT 0,
+  `lastReport` varchar(255) NOT NULL DEFAULT '0',
+  `editable` varchar(5) NOT NULL DEFAULT 'N'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `interior_datas`
+--
+
+CREATE TABLE `interior_datas` (
+  `interiorId` int(11) NOT NULL,
+  `paidCash` int(11) NOT NULL DEFAULT 0,
+  `interiorData` longtext NOT NULL,
+  `dynamicData` varchar(255) NOT NULL DEFAULT '',
+  `unlockedPP` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `items`
+--
+
+CREATE TABLE `items` (
+  `dbID` int(11) NOT NULL,
+  `itemId` int(11) NOT NULL DEFAULT 1,
+  `slot` int(11) NOT NULL DEFAULT 0,
+  `amount` int(11) NOT NULL DEFAULT 1,
+  `data1` mediumtext DEFAULT '0',
+  `data2` varchar(255) DEFAULT '0',
+  `data3` varchar(255) DEFAULT '0',
+  `nameTag` varchar(64) DEFAULT NULL,
+  `serial` int(11) NOT NULL DEFAULT 0,
+  `ownerType` varchar(32) NOT NULL DEFAULT '',
+  `ownerId` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `log_adminjail`
+--
+
+CREATE TABLE `log_adminjail` (
+  `logId` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `accountId` int(11) NOT NULL,
+  `adminName` varchar(256) NOT NULL,
+  `reason` text NOT NULL,
+  `duration` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `log_command`
+--
+
+CREATE TABLE `log_command` (
+  `logId` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `characterId` int(11) NOT NULL,
+  `accountId` int(11) NOT NULL,
+  `mtaSerial` varchar(32) NOT NULL,
+  `ipAddress` varchar(128) NOT NULL,
+  `command` varchar(256) NOT NULL,
+  `arguments` varchar(512) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `log_economy`
+--
+
+CREATE TABLE `log_economy` (
+  `logId` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `characterId` int(11) NOT NULL,
+  `economyType` varchar(1024) NOT NULL,
+  `managedAmount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `log_premiumshop`
+--
+
+CREATE TABLE `log_premiumshop` (
+  `logId` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `accountId` int(11) NOT NULL,
+  `characterId` int(11) NOT NULL,
+  `itemId` varchar(32) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `oldPP` int(11) NOT NULL,
+  `newPP` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `log_vehicle`
+--
+
+CREATE TABLE `log_vehicle` (
+  `logId` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `vehicleId` int(11) NOT NULL,
+  `characterId` int(11) NOT NULL,
+  `accountId` int(11) NOT NULL,
+  `command` varchar(256) NOT NULL,
+  `arguments` varchar(512) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `lottery`
+--
+
+CREATE TABLE `lottery` (
+  `id` int(11) NOT NULL,
+  `nums` varchar(255) NOT NULL,
+  `prize` bigint(20) NOT NULL DEFAULT 5000,
+  `selled` int(11) NOT NULL DEFAULT 0,
+  `winners` int(11) NOT NULL DEFAULT 0,
+  `started` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `mdc_accounts`
+--
+
+CREATE TABLE `mdc_accounts` (
+  `accountId` int(11) NOT NULL,
+  `username` varchar(48) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `leader` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `mdc_punishedpeople`
+--
+
+CREATE TABLE `mdc_punishedpeople` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `ticket` varchar(8) NOT NULL,
+  `jail` varchar(8) NOT NULL,
+  `reason` varchar(60) NOT NULL,
+  `added` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `mdc_wantedcars`
+--
+
+CREATE TABLE `mdc_wantedcars` (
+  `id` int(11) NOT NULL,
+  `type` varchar(48) NOT NULL,
+  `plate` varchar(8) NOT NULL,
+  `reason` varchar(60) NOT NULL,
+  `added` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `mdc_wantedpeople`
+--
+
+CREATE TABLE `mdc_wantedpeople` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `reason` varchar(60) NOT NULL,
+  `description` varchar(60) NOT NULL,
+  `added` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `namechanges`
+--
+
+CREATE TABLE `namechanges` (
+  `id` int(11) NOT NULL,
+  `cname` varchar(255) NOT NULL,
+  `wantedname` varchar(255) NOT NULL,
+  `reason` text NOT NULL,
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `characterID` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `elfogadva` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `state` int(11) NOT NULL DEFAULT 1,
+  `elfogadta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `peds`
+--
+
+CREATE TABLE `peds` (
+  `pedId` int(11) NOT NULL,
+  `ownerId` int(11) NOT NULL DEFAULT -1,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `mainType` int(11) NOT NULL,
+  `skinId` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL DEFAULT 'PED',
+  `balance` bigint(20) NOT NULL DEFAULT 0,
+  `itemList` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `pokertables`
+--
+
+CREATE TABLE `pokertables` (
+  `id` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `smallBlind` bigint(20) NOT NULL,
+  `bigBlind` bigint(20) NOT NULL,
+  `minEntry` int(11) NOT NULL,
+  `maxEntry` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `roulettes`
+--
+
+CREATE TABLE `roulettes` (
+  `id` int(11) NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
+  `z` float NOT NULL,
+  `rz` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `safes`
+--
+
+CREATE TABLE `safes` (
+  `dbID` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `ownerGroup` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `serialchanges`
+--
+
+CREATE TABLE `serialchanges` (
+  `id` int(11) NOT NULL,
+  `mtaserial` varchar(255) NOT NULL,
+  `reason` text NOT NULL,
+  `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `accountID` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `elfogadva` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `state` int(11) NOT NULL,
+  `elfogadta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `serverstat`
+--
+
+CREATE TABLE `serverstat` (
+  `dbID` int(11) NOT NULL,
+  `currentPlayers` int(11) NOT NULL,
+  `insertDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `smslog`
+--
+
+CREATE TABLE `smslog` (
+  `id` int(11) NOT NULL,
+  `user` varchar(100) NOT NULL,
+  `amount` int(10) NOT NULL DEFAULT 0,
+  `country` varchar(100) NOT NULL,
+  `sender` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `stocks`
+--
+
+CREATE TABLE `stocks` (
+  `name` varchar(255) NOT NULL DEFAULT '0',
+  `amount` varchar(255) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `toplist`
+--
+
+CREATE TABLE `toplist` (
+  `dbID` int(11) NOT NULL,
+  `character_id` text NOT NULL,
+  `character_name` text NOT NULL,
+  `car_name` text NOT NULL,
+  `elapsed_time` text NOT NULL,
+  `speed` text NOT NULL,
+  `date_recorded` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `trashes`
+--
+
+CREATE TABLE `trashes` (
+  `trashId` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `model` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `ucp_logins`
+--
+
+CREATE TABLE `ucp_logins` (
+  `logId` int(11) NOT NULL,
+  `username` int(11) NOT NULL,
+  `password` int(11) NOT NULL,
+  `captha` int(11) NOT NULL,
+  `adminLevel` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `success` tinyint(1) NOT NULL,
+  `ipAddresses` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `ucp_news`
+--
+
+CREATE TABLE `ucp_news` (
+  `id` int(11) NOT NULL,
+  `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_hungarian_ci NOT NULL,
+  `content` text CHARACTER SET utf8 COLLATE utf8_hungarian_ci NOT NULL,
+  `creator` varchar(32) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `ucp_serial`
+--
+
+CREATE TABLE `ucp_serial` (
+  `id` int(11) NOT NULL,
+  `key` text DEFAULT NULL,
+  `acc` int(11) NOT NULL,
+  `serialchangeid` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `vehicles`
+--
+
+CREATE TABLE `vehicles` (
+  `vehicleId` int(11) NOT NULL,
+  `ownerId` int(11) NOT NULL,
+  `modelId` int(11) NOT NULL,
+  `groupId` int(11) NOT NULL DEFAULT 0,
+  `last_position` varchar(512) NOT NULL,
+  `last_rotation` varchar(512) NOT NULL,
+  `last_interior` int(11) NOT NULL,
+  `last_dimension` int(11) NOT NULL,
+  `park_position` varchar(512) NOT NULL,
+  `park_rotation` varchar(512) NOT NULL,
+  `park_interior` int(11) NOT NULL,
+  `park_dimension` int(11) NOT NULL,
+  `color1` varchar(7) NOT NULL,
+  `color2` varchar(7) NOT NULL,
+  `color3` varchar(7) NOT NULL,
+  `color4` varchar(7) NOT NULL,
+  `headLightColor` varchar(7) NOT NULL,
+  `wheelStates` varchar(7) DEFAULT NULL,
+  `panelStates` varchar(13) DEFAULT NULL,
+  `doorStates` varchar(11) DEFAULT NULL,
+  `plateText` varchar(8) NOT NULL,
+  `health` float NOT NULL DEFAULT 1000,
+  `engine` int(11) NOT NULL DEFAULT 0,
+  `lights` int(11) NOT NULL DEFAULT 0,
+  `locked` int(11) NOT NULL DEFAULT 0,
+  `handBrake` int(11) NOT NULL DEFAULT 0,
+  `fuel` int(11) NOT NULL DEFAULT 100,
+  `distance` int(11) NOT NULL DEFAULT 0,
+  `impounded` int(11) NOT NULL DEFAULT 0,
+  `variant` int(11) NOT NULL DEFAULT 0,
+  `handlingFlags` int(11) NOT NULL DEFAULT 0,
+  `modelFlags` int(11) NOT NULL DEFAULT 0,
+  `tuningEngine` int(11) NOT NULL DEFAULT 0,
+  `tuningTurbo` int(11) NOT NULL DEFAULT 0,
+  `tuningECU` int(11) NOT NULL DEFAULT 0,
+  `tuningTransmission` int(11) NOT NULL DEFAULT 0,
+  `tuningSuspension` int(11) NOT NULL DEFAULT 0,
+  `tuningBrakes` int(11) NOT NULL DEFAULT 0,
+  `tuningTires` int(11) NOT NULL DEFAULT 0,
+  `tuningNitroLevel` int(11) NOT NULL DEFAULT 0,
+  `tuningWeightReduction` int(11) NOT NULL DEFAULT 0,
+  `tuningOptical` tinytext DEFAULT NULL,
+  `tuningNeon` int(11) NOT NULL DEFAULT 0,
+  `tuningAirRide` int(11) NOT NULL DEFAULT 0,
+  `tuningSpinners` tinytext DEFAULT NULL,
+  `tuningDoorType` tinytext DEFAULT NULL,
+  `tuningPaintjob` int(11) NOT NULL DEFAULT 0,
+  `tuningWheelPaintjob` int(11) NOT NULL DEFAULT 0,
+  `tuningHeadLight` int(11) NOT NULL DEFAULT 0,
+  `tuningDriveType` varchar(3) NOT NULL DEFAULT '',
+  `tuningSteeringLock` int(11) NOT NULL DEFAULT 0,
+  `airRideMemory` varchar(5) NOT NULL DEFAULT '8,8',
+  `speedoColor` varchar(16) NOT NULL DEFAULT '#FFFFFF;#FFFFFF',
+  `traffipaxRadar` int(11) NOT NULL DEFAULT 0,
+  `gpsNavigation` int(11) NOT NULL DEFAULT 0,
+  `customHorn` int(11) NOT NULL DEFAULT 0,
+  `activeDriveType` varchar(3) NOT NULL DEFAULT '',
+  `backFire` text NOT NULL,
+  `tuningPlatina` int(11) NOT NULL DEFAULT 0,
+  `vehicleSpecialMod` varchar(255) NOT NULL DEFAULT '0',
+  `protected` int(11) NOT NULL,
+  `licenseExpire` varchar(255) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `whitelist`
+--
+
+CREATE TABLE `whitelist` (
+  `id` int(11) NOT NULL,
+  `serial` varchar(32) NOT NULL,
+  `name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `worlditems`
+--
+
+CREATE TABLE `worlditems` (
+  `itemDbID` int(11) NOT NULL,
+  `creationDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creatorCharacter` int(11) NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `rotX` float NOT NULL,
+  `rotY` float NOT NULL,
+  `rotZ` float NOT NULL,
+  `interior` int(11) NOT NULL,
+  `dimension` int(11) NOT NULL,
+  `model` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

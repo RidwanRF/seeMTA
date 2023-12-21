@@ -1,0 +1,55 @@
+<Meta>
+
+	<script type = "client" cache = "false" src = "MaskerC.lua" />
+	<script type = "client" cache = "false" src = "RoundedC.lua" />
+
+	<script type = "shared" cache = "false" src = "SourceG.lua" />
+	<script type = "client" cache = "false" src = "SourceC.lua" />
+
+	<file src = "Files/Images/Phone.png" />
+	<file src = "Files/Images/Mask.png" />
+	<file src = "Files/Images/Round.png" />
+	<file src = "Files/Images/BarBg.png" />
+	
+	<file src = "Files/Images/Indicator.png" />
+	<file src = "Files/Images/Island/Camera.png" />
+	<file src = "Files/Images/Island/AcceptCall.png" />
+	<file src = "Files/Images/Island/CancelCall.png" />
+	<file src = "Files/Images/Island/Rounded.png" />
+	<file src = "Files/Images/Island/Backward.svg" />
+	<file src = "Files/Images/Island/Forward.svg" />
+	<file src = "Files/Images/Island/Pause.svg" />
+	<file src = "Files/Images/Island/Play.svg" />
+
+
+
+	<file src = "Files/Images/Apps/Mask.svg" />
+	<file src = "Files/Images/Apps/Phone.svg" />
+	<file src = "Files/Images/Apps/Safari.svg" />
+	<file src = "Files/Images/Apps/Messages.svg" />
+	<file src = "Files/Images/Apps/Music.svg" />
+
+	<file src = "Files/Images/Apps/Radio/Radio1.svg" />
+	<file src = "Files/Images/Apps/Radio/TechnoBase.svg" />
+
+	<file src = "Files/Images/Wallpapers/LockScreen/1.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/2.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/3.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/4.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/5.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/6.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/7.png" />
+	<file src = "Files/Images/Wallpapers/LockScreen/8.png" />
+
+	<file src = "Files/Shaders/Mask.fx" />
+	<file src = "Files/Shaders/RoundedRectangle.fx" />
+	
+
+	<file src = "Files/Fonts/LockScreen/4.otf" />
+
+	<file src = "Files/Fonts/SFCompactMedium.otf" />
+	<file src = "Files/Fonts/SFProRegular.ttf" />
+
+	
+
+</Meta>

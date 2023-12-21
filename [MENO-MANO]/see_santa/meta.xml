@@ -1,0 +1,38 @@
+<Meta>
+
+	<script type = "shared" cache = "false" src = "SourceG.lua" />
+	<script type = "client" cache = "false" src = "SourceC.lua" />
+
+	<export type = "client" function = "TryToStartSantaOpening" />
+
+	<file src = "Files/Fonts/BebasNeueRegular.otf" />
+
+	<file src = "Files/Images/1.Strong" />
+	<file src = "Files/Images/2.Strong" />
+	<file src = "Files/Images/3.Strong" />
+	<file src = "Files/Images/4.Strong" />
+	<file src = "Files/Images/Bg.Strong" />
+	<file src = "Files/Images/Body.Strong" />
+	<file src = "Files/Images/Eye.Strong" />
+	<file src = "Files/Images/Eyebg.Strong" />
+	<file src = "Files/Images/Eyeshut.Strong" />
+	<file src = "Files/Images/Glass.Strong" />
+	<file src = "Files/Images/Head.Strong" />
+	<file src = "Files/Images/Head2.Strong" />
+	<file src = "Files/Images/Hoho.Strong" />
+	<file src = "Files/Images/Ibg.Strong" />
+	<file src = "Files/Images/ItemHover.Strong" />
+	<file src = "Files/Images/Mouth.Strong" />
+	<file src = "Files/Images/Mouth2.Strong" />
+	<file src = "Files/Images/Shadow_body.Strong" />
+	<file src = "Files/Images/Shadow_head.Strong" />
+	<file src = "Files/Images/Win.Strong" />
+	<file src = "Files/Images/Zzz.Strong" />
+
+	<file src = "Files/Sounds/Hohoho.mp3" />
+	<file src = "Files/Sounds/Snore.mp3" />
+	<file src = "Files/Sounds/Spin.mp3" />
+	<file src = "Files/Sounds/Music.mp3" />
+	<file src = "Files/Sounds/Music2.mp3" />
+
+</Meta>

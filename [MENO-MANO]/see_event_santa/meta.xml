@@ -1,0 +1,17 @@
+<Meta>
+	<min_mta_version client = "1.5.8" server = "1.5.8" />
+
+	<script type = "shared" cache = "false" src = "SourceG.lua" />
+	<script src = "SourceS.lua" />
+
+	<script type = "client" cache = "false" src = "SourceC.lua" />
+	<script type = "client" cache = "false" src = "ButtonC.lua" />
+
+	<file src = "Files/Fonts/BebasNeueRegular.otf" />
+
+	<file src = "Files/Models/Santa.txd" />
+	<file src = "Files/Models/Santa.dff" />
+
+	<file src = "Files/Songs/Music.mp3" />
+
+</Meta>
